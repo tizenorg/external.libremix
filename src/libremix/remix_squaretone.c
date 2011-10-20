@@ -41,6 +41,7 @@ struct _RemixSquareTone {
   float frequency;
   CDSet * channel_data;
   CDSet * channels;
+  RemixCount length;
 };
 
 /* Optimisation dependencies: none */
@@ -88,6 +89,7 @@ remix_squaretone_new (RemixEnv * env, float frequency)
     remix_base_new_subclass (env, sizeof (struct _RemixSquareTone));
   remix_squaretone_init (env, (RemixBase *)squaretone);
   squaretone->frequency = frequency;
+  squaretone->length = REMIX_COUNT_INFINITE;
 
   return (RemixBase *)squaretone;
 }
@@ -140,6 +142,22 @@ remix_squaretone_get_frequency (RemixEnv * env, RemixBase * base)
 {
   RemixSquareTone * squaretone = (RemixSquareTone *)base;
   return squaretone->frequency;
+}
+
+RemixCount
+remix_squaretone_set_length (RemixEnv * env, RemixBase * base, RemixCount length)
+{
+  RemixSquareTone * squaretone = (RemixSquareTone *)base;
+  RemixCount old = squaretone->length;
+  squaretone->length = length;
+  return old;
+}
+
+RemixCount
+remix_squaretone_get_length (RemixEnv * env, RemixBase * base)
+{
+  RemixSquareTone * squaretone = (RemixSquareTone *)base;
+  return squaretone->length;
 }
 
 void
@@ -240,7 +258,8 @@ remix_squaretone_process (RemixEnv * env, RemixBase * base, RemixCount count,
 static RemixCount
 remix_squaretone_length (RemixEnv * env, RemixBase * base)
 {
-  return REMIX_COUNT_INFINITE;
+  RemixSquareTone * squaretone = (RemixSquareTone *)base;
+  return squaretone->length;
 }
 
 static RemixCount
