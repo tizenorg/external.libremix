@@ -1,5 +1,15 @@
+libremix (0.2.4) unstable; urgency=low
+
+  * Merge with svn version 0.2.4 and whitespace removed.
+  * Git: slp/pkgs/l/libremix
+  * Tag: 0.2.4
+
+ -- Prince Kumar Dubey <prince.dubey@samsung.com>  Thu, 19 Jan 2012 18:38:00 +0530
+
 libremix (0.2.3) unstable; urgency=low
 
   * Initial Version.
+  * Git: slp/pkgs/l/libremix
+  * Tag: 0.2.3
 
  -- Prince Kumar Dubey <prince.dubey@samsung.com> Govindaraju S M <govi.sm@samsung.com>  Tue, 20 Sep 2011 15:00:00 +0900

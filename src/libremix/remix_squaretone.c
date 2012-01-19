@@ -29,19 +29,17 @@
 #define __REMIX__
 #include "remix.h"
 
-typedef struct _RemixSquareToneChannelData RemixSquareToneChannelData;
+typedef struct _RemixSquareToneChannel RemixSquareToneChannel;
 typedef struct _RemixSquareTone RemixSquareTone;
 
-struct _RemixSquareToneChannelData {
+struct _RemixSquareToneChannel {
   RemixCount _cycle_offset;
 };
 
 struct _RemixSquareTone {
   RemixBase base;
   float frequency;
-  CDSet * channel_data;
   CDSet * channels;
-  RemixCount length;
 };
 
 /* Optimisation dependencies: none */
@@ -51,20 +49,20 @@ static RemixSquareTone * remix_squaretone_optimise (RemixEnv * env,
 static RemixSquareTone *
 remix_squaretone_replace_channels (RemixEnv * env, RemixSquareTone * squaretone)
 {
-  RemixSquareToneChannelData * sqch;
+  RemixSquareToneChannel * sqch;
   CDSet * s, * channels = remix_get_channels (env);
   RemixCount offset = remix_tell (env, (RemixBase *)squaretone);
 
-  cd_set_free_all (env, squaretone->channel_data);
+  cd_set_free_all (env, squaretone->channels);
 
   for (s = channels; s; s = s->next) {
     remix_dprintf ("[remix_squaretone_replace_channels] %p replacing channel %d\n",
 		squaretone, s->key);
-    sqch = (RemixSquareToneChannelData *)
-      remix_malloc (sizeof (struct _RemixSquareToneChannelData));
+    sqch = (RemixSquareToneChannel *)
+      remix_malloc (sizeof (struct _RemixSquareToneChannel));
     sqch->_cycle_offset = 0;
-    squaretone->channel_data =
-      cd_set_insert (env, squaretone->channel_data, s->key, CD_POINTER(sqch));
+    squaretone->channels =
+      cd_set_insert (env, squaretone->channels, s->key, CD_POINTER(sqch));
   }
 
   if (offset > 0) remix_seek (env, (RemixBase *)squaretone, offset, SEEK_SET);
@@ -76,7 +74,7 @@ static RemixBase *
 remix_squaretone_init (RemixEnv * env, RemixBase * base)
 {
   RemixSquareTone * squaretone = (RemixSquareTone *)base;
-  squaretone->channel_data = NULL;
+  squaretone->channels = NULL;
   remix_squaretone_replace_channels (env, squaretone);
   remix_squaretone_optimise (env, squaretone);
   return base;
@@ -89,7 +87,6 @@ remix_squaretone_new (RemixEnv * env, float frequency)
     remix_base_new_subclass (env, sizeof (struct _RemixSquareTone));
   remix_squaretone_init (env, (RemixBase *)squaretone);
   squaretone->frequency = frequency;
-  squaretone->length = REMIX_COUNT_INFINITE;
 
   return (RemixBase *)squaretone;
 }
@@ -144,44 +141,6 @@ remix_squaretone_get_frequency (RemixEnv * env, RemixBase * base)
   return squaretone->frequency;
 }
 
-RemixCount
-remix_squaretone_set_length (RemixEnv * env, RemixBase * base, RemixCount length)
-{
-  RemixSquareTone * squaretone = (RemixSquareTone *)base;
-  RemixCount old = squaretone->length;
-  squaretone->length = length;
-  return old;
-}
-
-RemixCount
-remix_squaretone_get_length (RemixEnv * env, RemixBase * base)
-{
-  RemixSquareTone * squaretone = (RemixSquareTone *)base;
-  return squaretone->length;
-}
-
-void
-remix_squaretone_add_channel (RemixEnv * env, RemixBase * base, RemixChannelName channel )
-{
-  RemixSquareTone * squaretone = (RemixSquareTone *)base;
-  squaretone->channels = cd_set_replace (env, squaretone->channels, channel, CD_POINTER(NULL));;
-}
-
-void
-remix_squaretone_remove_channel (RemixEnv * env, RemixBase * base, RemixChannelName channel )
-{
-  RemixSquareTone * squaretone = (RemixSquareTone *)base;
-  squaretone->channels = cd_set_remove(env, squaretone->channels, channel );
-}
-
-CDSet *
-remix_squaretone_get_channels (RemixEnv * env, RemixBase * base )
-{
-  RemixSquareTone * squaretone = (RemixSquareTone *)base;
-  return squaretone->channels;
-}
-
-
 /* An RemixChunkFunc for creating squaretone data */
 static RemixCount
 remix_squaretone_write_chunk (RemixEnv * env, RemixChunk * chunk,
@@ -189,20 +148,17 @@ remix_squaretone_write_chunk (RemixEnv * env, RemixChunk * chunk,
                               int channelname, void * data)
 {
   RemixSquareTone * squaretone = (RemixSquareTone *)data;
-  RemixSquareToneChannelData * sqch;
+  RemixSquareToneChannel * sqch;
   RemixCount remaining = count, written = 0, n;
   RemixCount wavelength;
   RemixPCM * d, value;
   CDScalar k;
-  int channel_enabled = 0;
 
   remix_dprintf ("[remix_squaretone_write_chunk] (+%ld) @ %ld\n",
                  count, offset);
 
-  k = cd_set_find (env, squaretone->channel_data, channelname);
+  k = cd_set_find (env, squaretone->channels, channelname);
   sqch = k.s_pointer;
-
-  channel_enabled = cd_set_contains (env, squaretone->channels, channelname);
 
   if (sqch == RemixNone) {
     remix_dprintf ("[remix_squaretone_write_chunk] channel %d not found\n",
@@ -223,8 +179,6 @@ remix_squaretone_write_chunk (RemixEnv * env, RemixChunk * chunk,
     n = MIN (remaining, wavelength - sqch->_cycle_offset);
     value = -1.0;
   }
-
-  if(!channel_enabled ) value = 0;
 
   d = &chunk->data[offset];
   _remix_pcm_set (d, value, n);
@@ -258,8 +212,7 @@ remix_squaretone_process (RemixEnv * env, RemixBase * base, RemixCount count,
 static RemixCount
 remix_squaretone_length (RemixEnv * env, RemixBase * base)
 {
-  RemixSquareTone * squaretone = (RemixSquareTone *)base;
-  return squaretone->length;
+  return REMIX_COUNT_INFINITE;
 }
 
 static RemixCount
@@ -269,13 +222,13 @@ remix_squaretone_seek (RemixEnv * env, RemixBase * base, RemixCount offset)
   RemixCount wavelength;
   CDSet * s;
   RemixCount cycle_offset;
-  RemixSquareToneChannelData * sqch;
+  RemixSquareToneChannel * sqch;
 
   wavelength = (RemixCount)(remix_get_samplerate (env) / squaretone->frequency);
   cycle_offset = offset % wavelength;
 
-  for (s = squaretone->channel_data; s; s = s->next) {
-    sqch = (RemixSquareToneChannelData *)s->data.s_pointer;
+  for (s = squaretone->channels; s; s = s->next) {
+    sqch = (RemixSquareToneChannel *)s->data.s_pointer;
     sqch->_cycle_offset = cycle_offset;
   }
 

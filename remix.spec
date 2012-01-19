@@ -1,6 +1,6 @@
 
 %define name    remix
-%define version 0.2.3
+%define version 0.2.4
 %define release 1
 %define prefix  /usr
 

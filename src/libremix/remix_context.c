@@ -49,7 +49,7 @@ remix_context_destroy (RemixEnv * env)
 
   world->plugins = cd_list_destroy_with (env, world->plugins, remix_plugin_destroy);
   remix_plugin_defaults_unload (env);
-//need to analyse why its commented in svn version ???
+
   //world->bases = cd_list_destroy_with (env, world->bases, remix_destroy);
 
   remix_channelset_defaults_destroy (env);
