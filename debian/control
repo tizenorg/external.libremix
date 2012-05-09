@@ -1,7 +1,7 @@
 Source: libremix
 Section: libs
 Priority: optional
-Uploaders: Prince Kumar Dubey<prince.dubey@samsung.com> Govindaraju S M<govi.sm@samsung.com>
+Uploaders: Prince Kumar Dubey <prince.dubey@samsung.com>, Govindaraju S M <govi.sm@samsung.com>, Daniel Juyung Seo <juyung.seo@samsung.com>
 Maintainer: Conrad Parker <conrad@metadecks.org>
 Build-Depends: cdbs, libsndfile1-dev, libsndfile1, pkg-config, libtool
 Standards-Version: 0.2.4

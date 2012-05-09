@@ -1,3 +1,11 @@
+libremix (0.2.4-1slp2) unstable; urgency=low
+
+  * Upload Package.
+  * Git: slp/pkgs/l/libremix
+  * Tag: libremix_0.2.4-1slp2
+
+ -- Daniel Juyung Seo <juyung.seo@samsung.com>  Wed, 09 May 2012 19:58:35 +0900
+
 libremix (0.2.4) unstable; urgency=low
 
   * Merge with svn version 0.2.4 and whitespace removed.
