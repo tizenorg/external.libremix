@@ -1,8 +1,8 @@
 Source: libremix
 Section: libs
 Priority: optional
-Uploaders: Prince Kumar Dubey <prince.dubey@samsung.com>, Govindaraju S M <govi.sm@samsung.com>, Daniel Juyung Seo <juyung.seo@samsung.com>
-Maintainer: Conrad Parker <conrad@metadecks.org>
+Uploaders: Prince Kumar Dubey <prince.dubey@samsung.com>, Govindaraju S M <govi.sm@samsung.com>, Daniel Juyung Seo <juyung.seo@samsung.com>, Hyoyoung Chang <hyoyoung.chang>
+Maintainer: Prince Kumar Dubey <prince.dubey@samsung.com>
 Build-Depends: cdbs, libsndfile1-dev, libsndfile1, pkg-config, libtool
 Standards-Version: 0.2.4
 Homepage: http://www.metadecks.org/software/remix/
