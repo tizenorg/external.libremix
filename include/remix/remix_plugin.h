@@ -64,8 +64,6 @@ typedef struct _RemixPlugin RemixPlugin;
 
 typedef struct _RemixChunk RemixChunk;
 
-typedef struct _Remix_Sound_Data Remix_Sound_Data;
-
 #if defined (__REMIX__)
 #include "remix_private.h"
 #else

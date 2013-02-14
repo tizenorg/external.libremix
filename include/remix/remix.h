@@ -182,6 +182,13 @@ RemixTempo remix_get_tempo (RemixEnv * env);
 CDSet * remix_set_channels (RemixEnv * env, CDSet * channelset);
 CDSet * remix_get_channels (RemixEnv * env);
 
+#if 0
+  /* XXX */
+/* Sources: Plugins, Samples etc. */
+CDList * remix_open (SOUNDRENDER env, char * filename);
+void remix_close (SOUNDRENDER env, RemixPlugin plugin);
+#endif
+
 /* Base objects */
 
 RemixPlugin * remix_find_plugin (RemixEnv * env, char * identifier);

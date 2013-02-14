@@ -2,9 +2,9 @@
 INCLUDES = -I$(top_srcdir)/src/ctxdata -I$(top_srcdir)/include -I../ctxdata
 
 if BUILD_MONITOR
-monitor_programs = noisedemo squaredemo mysquaredemo
+monitor_programs = noisedemo squaredemo
 if HAVE_LIBSNDFILE1
-sndfile_programs = sndfiledemo simple_sndfiledemo
+sndfile_programs = sndfiledemo
 endif
 
 endif
@@ -24,13 +24,6 @@ noisedemo_LDADD = $(REMIX_LIBS)
 squaredemo_SOURCES = squaredemo.c
 squaredemo_LDADD = $(REMIX_LIBS)
 
-mysquaredemo_SOURCES = simple_squaredemo.c
-mysquaredemo_LDADD = $(REMIX_LIBS)
-
 sndfiledemo_CFLAGS = -DSAMPLEDIR=\"$(srcdir)\"
 sndfiledemo_SOURCES = sndfiledemo.c
 sndfiledemo_LDADD = $(REMIX_LIBS) @SNDFILE_LIBS@
-
-simple_sndfiledemo_CFLAGS = -DSAMPLEDIR=\"$(srcdir)\"
-simple_sndfiledemo_SOURCES = simple_sndfiledemo.c
-simple_sndfiledemo_LDADD = $(REMIX_LIBS) @SNDFILE_LIBS@

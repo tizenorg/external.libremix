@@ -1,8 +1,30 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(src/libremix/remix_base.c)
 
-AM_INIT_AUTOMAKE(remix, 0.2.3)
+AM_INIT_AUTOMAKE(remix, 0.2.4)
 AM_CONFIG_HEADER(config.h)
+
+example_programs="noisedemo squaredemo"
+
+################################################################################
+# Set the shared versioning info, according to section 6.3 of the libtool info #
+# pages. CURRENT:REVISION:AGE must be updated immediately before each release: #
+#                                                                              #
+#   * If the library source code has changed at all since the last             #
+#     update, then increment REVISION (`C:R:A' becomes `C:r+1:A').             #
+#                                                                              #
+#   * If any interfaces have been added, removed, or changed since the         #
+#     last update, increment CURRENT, and set REVISION to 0.                   #
+#                                                                              #
+#   * If any interfaces have been added since the last public release,         #
+#     then increment AGE.                                                      #
+#                                                                              #
+#   * If any interfaces have been removed since the last public release,       #
+#     then set AGE to 0.                                                       #
+#                                                                              #
+################################################################################
+SHARED_VERSION_INFO="1:0:1"
+SHLIB_VERSION_ARG=""
 
 dnl Checks for programs.
 AM_PROG_LIBTOOL
@@ -60,16 +82,15 @@ dnl
 dnl  Detect libsndfile 1.0
 dnl
 
+
 PKG_CHECK_MODULES(SNDFILE, sndfile >= 1.0.0,
                   HAVE_LIBSNDFILE1="yes", HAVE_LIBSNDFILE1="no")
-
-AC_SUBST(SNDFILE_LIBS)
-AC_SUBST(SNDFILE_CFLAGS)
 
 if test "$HAVE_LIBSNDFILE1" = "yes" ; then
   AC_DEFINE([HAVE_LIBSNDFILE1], [], [Define if libsndfile version 1 found])
   AC_SUBST(SNDFILE_LIBS)
   AC_SUBST(SNDFILE_CFLAGS)
+  example_programs="${example_programs} sndfiledemo"
 else
   AC_CHECK_LIB(sndfile, sf_open, HAVE_LIBSNDFILE1="maybe")
   if test "$HAVE_LIBSNDFILE1" = "maybe" ; then
@@ -135,7 +156,6 @@ AC_ARG_ENABLE(gcc-werror,
 	AC_HELP_STRING([--enable-gcc-werror], [enable -Werror in all Makefiles]))
 
 dnl Use -Wall if we have gcc.
-
 if test "x$ac_cv_prog_gcc" = xyes ; then
   CFLAGS="$CFLAGS -Wall"
 
@@ -144,6 +164,9 @@ if test "x$ac_cv_prog_gcc" = xyes ; then
 	fi
 
 fi
+
+AC_SUBST(SHLIB_VERSION_ARG)
+AC_SUBST(SHARED_VERSION_INFO)
 
 AC_OUTPUT([
 Makefile

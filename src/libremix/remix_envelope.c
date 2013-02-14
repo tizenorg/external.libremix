@@ -116,7 +116,6 @@ remix_envelope_new (RemixEnv * env, RemixEnvelopeType type)
   remix_envelope_init (env, (RemixBase *)envelope);
   envelope->type = type;
   remix_envelope_debug (env, envelope);
-
   return envelope;
 }
 

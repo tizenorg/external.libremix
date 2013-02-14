@@ -66,7 +66,7 @@ remix_debug_up (void)
 void
 remix_dprintf (const char * fmt, ...)
 {
-#if 0
+#ifdef DEBUG
   va_list ap;
   char buf[4096];
   int i, n;

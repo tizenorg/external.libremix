@@ -45,7 +45,6 @@ struct _RemixSndfileInstance {
   SF_INFO info;
   float * pcm;
   sf_count_t pcm_n;
-  CDSet * channels;
 };
 
 
@@ -318,17 +317,6 @@ static struct _RemixParameterScheme path_scheme = {
   REMIX_CONSTRAINT_EMPTY,
   REMIX_HINT_FILENAME,
 };
-
-
-static struct _RemixParameterScheme channels_scheme = {
-  "channels",
-  "Channel List to play file",
-  REMIX_TYPE_BOOL,
-  REMIX_CONSTRAINT_TYPE_NONE,
-  REMIX_CONSTRAINT_EMPTY,
-  REMIX_HINT_CHANNEL,
-};
-
 
 #if 0
 static RemixNamedParameter types[] = {
