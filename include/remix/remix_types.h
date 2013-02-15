@@ -48,19 +48,13 @@ typedef long RemixCount;
 #define REMIX_COUNT_MIN LONG_MIN
 #define REMIX_COUNT_INFINITE REMIX_COUNT_MAX
 
-//TODO xxx : Change this
-typedef struct _RemixOpaque RemixOpaque;
+typedef void RemixOpaque;
 
 #if defined (__REMIX__)
 typedef struct _RemixBase RemixBase;
 #else
 typedef RemixOpaque RemixBase;
 #endif
-
-//TODO xxx : Change this
-struct _RemixOpaque {
-  void * instance_data;
-};
 
 typedef CDScalar RemixParameter;
 
@@ -136,7 +130,6 @@ typedef enum {
 #define REMIX_HINT_LOG      (1<<0)
 #define REMIX_HINT_TIME     (1<<1)
 #define REMIX_HINT_FILENAME (1<<2)
-#define REMIX_HINT_CHANNEL (1<<3)
 
 #define REMIX_CONSTRAINT_EMPTY ((RemixConstraint){NULL})
 

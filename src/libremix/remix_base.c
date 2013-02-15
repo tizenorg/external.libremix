@@ -431,9 +431,6 @@ remix_process_fast (RemixEnv * env, RemixBase * base, RemixCount count,
     remix_set_error (env, REMIX_ERROR_INVALID);
     return -1;
   }
-
-  remix_get_meta_text (env, base);
-
   n = _remix_process (env, base, count, input, output);
   if (n > 0) base->offset += n;
   return n;
