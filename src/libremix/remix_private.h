@@ -426,7 +426,6 @@ RemixCount _remix_chunk_blend_inplace (RemixEnv * env,
 /* XXX: remove these when dynamic! */
 CDList * __gain_init (RemixEnv * env);
 CDList * __sndfile_init (RemixEnv * env);
-CDList * __ogg_init (RemixEnv * env);
 
 #endif /* defined(__REMIX__) */
 

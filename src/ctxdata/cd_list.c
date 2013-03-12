@@ -435,7 +435,7 @@ cd_list_destroy_with (void * ctx, CDList * list, CDDestroyFunc destroy)
 
   for (l = list; l; l = ln) {
     ln = l->next;
-//    destroy (ctx, l->data.s_pointer);
+    destroy (ctx, l->data.s_pointer);
     cd_free (l);
   }
 
