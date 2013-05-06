@@ -155,7 +155,8 @@ remix_stream_destroy (RemixEnv * env, RemixBase * base)
     return -1;
   }
 
-  cd_set_destroy_with (env, stream->channels, (CDDestroyFunc)remix_destroy);
+  // RemixChannel doesnot inherit RemixBase, so register its own destructor explicitly.
+  cd_set_destroy_with (env, stream->channels, (CDDestroyFunc)remix_channel_destroy);
 
   remix_free (stream);
   return 0;
