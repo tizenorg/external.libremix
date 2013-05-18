@@ -194,7 +194,8 @@ remix_base_new_subclass (RemixEnv * env, size_t size)
 {
   RemixBase * base = remix_malloc (size);
   _remix_context_copy (env, &base->context_limit);
-  _remix_register_base (env, base);
+  //Don't register/unregister base unncessarily
+  //_remix_register_base (env, base);
   return base;
 }
 
@@ -370,12 +371,19 @@ remix_destroy (RemixEnv * env, RemixBase * base)
     return -1;
   }
 
-  _remix_unregister_base (env, base);
+  //Don't register/unregister base unncessarily
+  //_remix_unregister_base (env, base);
 
   if (!base->methods || !base->methods->destroy) {
     remix_set_error (env, REMIX_ERROR_INVALID);
     return -1;
   }
+
+  if (base && base->context_limit.channels) {
+    //free the cloned copy of channels to avoid memory leak.
+    cd_set_free(env, base->context_limit.channels);
+  }
+
   return _remix_destroy (env, base);
 }
 

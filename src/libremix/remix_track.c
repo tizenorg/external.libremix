@@ -94,7 +94,14 @@ static int
 remix_track_destroy (RemixEnv * env, RemixBase * base)
 {
   RemixTrack * track = (RemixTrack *)base;
-  remix_destroy_list (env, track->layers);
+  //Just call destructor but dont delete item which is removed already.
+  //remix_destroy_list (env, track->layers);
+  cd_list_call_destroy(env, track->layers, (CDDestroyFunc)remix_destroy);
+
+  if (track->_mixstream_a != RemixNone)
+    remix_destroy (env, (RemixBase *)track->_mixstream_a);
+  if (track->_mixstream_b != RemixNone)
+    remix_destroy (env, (RemixBase *)track->_mixstream_b);
   remix_free (track);
   return 0;
 }
