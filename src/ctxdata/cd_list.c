@@ -372,19 +372,19 @@ cd_list_insert (void * ctx, CDList * list, CDScalarType type, CDScalar data,
 CDList *
 cd_list_remove (void * ctx, CDList * list, CDScalarType type, CDScalar data)
 {
-  CDList * l = cd_list_find (ctx, list, type, data);
+  CDList *ret_node, * l = cd_list_find (ctx, list, type, data);
 
   if (l == NULL) return list;
 
   if (l->prev) l->prev->next = l->next;
   if (l->next) l->next->prev = l->prev;
 
+  ret_node = (l != list) ? list : list->next;
   //free the element here to avoid memory leak, otherwise reference is lost
   //and a dangling pointer.
   cd_free (l);
 
-  if (l == list) return list->next;
-  else return list;
+  return ret_node;
 }
 
 CDList *
