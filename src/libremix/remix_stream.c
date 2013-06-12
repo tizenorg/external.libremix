@@ -306,6 +306,8 @@ static struct _RemixMethods _remix_stream_methods = {
   remix_stream_process,
   remix_stream_length,
   remix_stream_seek,
+  NULL, /* flush */
+  NULL, /* reset */
 };
 
 static RemixStream *

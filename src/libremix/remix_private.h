@@ -263,6 +263,7 @@ struct _RemixMonitor {
         (((RemixBase*)b)->methods->process ((a),((RemixBase*)b),(c),(i),(o)))
 #define _remix_length(a,b) (((RemixBase*)b)->methods->length ((a), ((RemixBase*)b)))
 #define _remix_flush(a,b) (((RemixBase*)b)->methods->flush ((a), ((RemixBase*)b)))
+#define _remix_reset(a,b) (((RemixBase*)b)->methods->reset ((a), ((RemixBase*)b)))
 
 
 /* util */

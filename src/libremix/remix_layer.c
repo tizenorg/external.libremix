@@ -645,6 +645,7 @@ static struct _RemixMethods _remix_layer_methods = {
   remix_layer_length,  /* length */
   remix_layer_seek,    /* seek */
   remix_layer_flush,   /* flush */
+  NULL,             /* reset */
 };
 
 static RemixLayer *

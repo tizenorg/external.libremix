@@ -374,6 +374,7 @@ static struct _RemixMethods _remix_monitor_methods = {
   remix_monitor_length,
   remix_monitor_seek,
   remix_monitor_flush,
+  NULL, /* reset */
 };
 
 static RemixMonitor *

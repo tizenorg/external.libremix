@@ -762,6 +762,7 @@ static struct _RemixMethods _remix_ladspa_1_0_methods = {
   remix_ladspa_length,
   NULL, /* seek */
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static struct _RemixMethods _remix_ladspa_0_1_methods = {
@@ -773,6 +774,7 @@ static struct _RemixMethods _remix_ladspa_0_1_methods = {
   remix_ladspa_length,
   NULL, /* seek */
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static struct _RemixMethods _remix_ladspa_1_1_methods = {
@@ -784,6 +786,7 @@ static struct _RemixMethods _remix_ladspa_1_1_methods = {
   remix_ladspa_length,
   NULL, /* seek */
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 
@@ -796,6 +799,7 @@ static struct _RemixMethods _remix_ladspa_methods = {
   remix_ladspa_length,
   NULL, /* seek */
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static RemixBase *

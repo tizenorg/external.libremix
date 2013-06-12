@@ -430,6 +430,7 @@ static struct _RemixMethods _remix_track_empty_methods = {
   remix_null_length,   /* length */
   remix_null_seek,     /* seek */
   NULL,             /* flush */
+  NULL,            /* reset */
 };
 
 static struct _RemixMethods _remix_track_methods = {
@@ -441,6 +442,7 @@ static struct _RemixMethods _remix_track_methods = {
   remix_track_length,  /* length */
   remix_track_seek,    /* seek */
   remix_track_flush,            /* flush */
+  NULL,            /* reset */
 };
 
 static struct _RemixMethods _remix_track_onelayer_methods = {
@@ -452,6 +454,7 @@ static struct _RemixMethods _remix_track_onelayer_methods = {
   remix_track_length,           /* length */
   remix_track_seek,             /* seek */
   remix_track_flush,            /* flush */
+  NULL,            /* reset */
 };
 
 static struct _RemixMethods _remix_track_twolayer_methods = {
@@ -463,6 +466,7 @@ static struct _RemixMethods _remix_track_twolayer_methods = {
   remix_track_length,           /* length */
   remix_track_seek,             /* seek */
   remix_track_flush,            /* flush */
+  NULL,            /* reset */
 };
 
 static RemixTrack *

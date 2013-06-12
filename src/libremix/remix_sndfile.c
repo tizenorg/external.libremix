@@ -282,6 +282,7 @@ static struct _RemixMethods _remix_sndfile_reader_methods = {
   remix_sndfile_length,
   remix_sndfile_seek,
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static struct _RemixMethods _remix_sndfile_writer_methods = {
@@ -293,6 +294,7 @@ static struct _RemixMethods _remix_sndfile_writer_methods = {
   remix_sndfile_length,
   remix_sndfile_seek,
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static RemixBase *

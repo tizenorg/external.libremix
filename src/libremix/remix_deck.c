@@ -366,6 +366,7 @@ static struct _RemixMethods _remix_deck_empty_methods = {
   remix_null_length,  /* length */
   NULL,            /* seek */
   NULL,            /* flush */
+  NULL,            /* reset */
 };
 
 static struct _RemixMethods _remix_deck_methods = {
@@ -377,6 +378,7 @@ static struct _RemixMethods _remix_deck_methods = {
   remix_deck_length,  /* length */
   remix_deck_seek,    /* seek */
   remix_deck_flush,   /* flush */
+  NULL,            /* reset */
 };
 
 static struct _RemixMethods _remix_deck_onetrack_methods = {
@@ -388,6 +390,7 @@ static struct _RemixMethods _remix_deck_onetrack_methods = {
   remix_deck_length,           /* length */
   remix_deck_seek,             /* seek */
   remix_deck_flush,   /* flush */
+  NULL,            /* reset */
 };
 
 static struct _RemixMethods _remix_deck_twotrack_methods = {
@@ -399,6 +402,7 @@ static struct _RemixMethods _remix_deck_twotrack_methods = {
   remix_deck_length,           /* length */
   remix_deck_seek,             /* seek */
   remix_deck_flush,   /* flush */
+  NULL,            /* reset */
 };
 
 static RemixDeck *

@@ -473,6 +473,7 @@ static struct _RemixMethods _remix_envelope_empty_methods = {
   remix_null_length,
   remix_envelope_seek,
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static struct _RemixMethods _remix_envelope_constant_methods = {
@@ -484,6 +485,7 @@ static struct _RemixMethods _remix_envelope_constant_methods = {
   remix_envelope_length,
   remix_envelope_seek,
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static struct _RemixMethods _remix_envelope_linear_methods = {
@@ -495,6 +497,7 @@ static struct _RemixMethods _remix_envelope_linear_methods = {
   remix_envelope_length,
   remix_envelope_seek,
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static struct _RemixMethods _remix_envelope_spline_methods = {
@@ -506,6 +509,7 @@ static struct _RemixMethods _remix_envelope_spline_methods = {
   remix_envelope_length,
   remix_envelope_seek,
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static struct _RemixMethods _remix_envelope_methods = {
@@ -517,6 +521,7 @@ static struct _RemixMethods _remix_envelope_methods = {
   remix_envelope_length,
   remix_envelope_seek,
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static RemixEnvelope *

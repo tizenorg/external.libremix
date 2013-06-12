@@ -561,6 +561,20 @@ remix_flush (RemixEnv * env, RemixBase * base)
   return _remix_flush (env, base);
 }
 
+int
+remix_reset (RemixEnv * env, RemixBase * base)
+{
+  if (!base) {
+    remix_set_error (env, REMIX_ERROR_NOENTITY);
+    return -1;
+  }
+  if (!base->methods || !base->methods->reset) {
+    remix_set_error (env, REMIX_ERROR_INVALID);
+    return -1;
+  }
+  return _remix_reset (env, base);
+}
+
 RemixMetaText *
 remix_get_meta_text (RemixEnv * env, RemixBase * base)
 {

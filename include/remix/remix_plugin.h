@@ -103,6 +103,7 @@ typedef RemixCount (*RemixProcessFunc) (RemixEnv * env, RemixBase * base,
 					RemixStream * input,
 					RemixStream * output);
 typedef int (*RemixFlushFunc) (RemixEnv * env, RemixBase * base);
+typedef int (*RemixResetFunc) (RemixEnv * env, RemixBase * base);
 
 #define REMIX_FLAGS_NONE (0)
 
@@ -200,6 +201,7 @@ struct _RemixMethods {
   RemixLengthFunc length;
   RemixSeekFunc seek;
   RemixFlushFunc flush;
+  RemixResetFunc reset;
 };
 
 

@@ -566,6 +566,7 @@ static struct _RemixMethods _remix_sound_methods = {
   remix_sound_length,        /* length */
   remix_sound_seek,          /* seek */
   remix_sound_flush,         /* flush */
+  NULL,         /* reset */
 };
 
 static RemixSound *
