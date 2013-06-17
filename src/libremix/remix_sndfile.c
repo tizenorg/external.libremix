@@ -273,6 +273,20 @@ remix_sndfile_seek (RemixEnv * env, RemixBase * base, RemixCount offset)
   return sf_seek (si->file, offset, SEEK_SET);
 }
 
+static int
+remix_sndfile_reader_destroy (RemixEnv * env, RemixPlugin * plugin)
+{
+  cd_set_free (env, plugin->init_scheme);
+  return 0;
+}
+
+static int
+remix_sndfile_writer_destroy (RemixEnv * env, RemixPlugin * plugin)
+{
+  cd_set_free (env, plugin->init_scheme);
+  return 0;
+}
+
 static struct _RemixMethods _remix_sndfile_reader_methods = {
   remix_sndfile_clone,
   remix_sndfile_destroy,
@@ -388,7 +402,7 @@ static struct _RemixPlugin sndfile_reader_plugin = {
   CD_EMPTY_SET, /* process scheme */
   NULL, /* suggests */
   NULL, /* plugin data */
-  NULL  /* destroy */
+  remix_sndfile_reader_destroy  /* destroy */
 };
 
 static struct _RemixPlugin sndfile_writer_plugin = {
@@ -399,7 +413,7 @@ static struct _RemixPlugin sndfile_writer_plugin = {
   CD_EMPTY_SET, /* process scheme */
   NULL, /* suggests */
   NULL, /* plugin data */
-  NULL  /* destroy */
+  remix_sndfile_writer_destroy  /* destroy */
 };
 
 /* module init function */

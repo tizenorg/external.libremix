@@ -92,9 +92,8 @@ static int
 remix_deck_destroy (RemixEnv * env, RemixBase * base)
 {
   RemixDeck * deck = (RemixDeck *)base;
-  //Just call destructor but dont delete item which is removed already.
-  //remix_destroy_list (env, deck->tracks);
-  cd_list_call_destroy(env, deck->tracks, (CDDestroyFunc)remix_destroy);
+
+  remix_destroy_list (env, deck->tracks);
   remix_destroy (env, (RemixBase *)deck->_mixstream);
   remix_free (deck);
   return 0;
