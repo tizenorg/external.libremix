@@ -2,7 +2,7 @@
 
 Name:       libremix
 Summary:    An audio sequencing and mixing library.
-Version:    0.2.4+slp2+build09
+Version:    0.2.4+slp2+build09r01
 Release:    1
 Group:      Libraries/Sound
 License:    LGPLv2.1
