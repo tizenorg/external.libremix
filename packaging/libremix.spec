@@ -2,7 +2,7 @@
 
 Name:       libremix
 Summary:    An audio sequencing and mixing library.
-Version:    0.2.4+build13b01
+Version:    0.2.4+build14
 Release:    1
 Group:      Libraries/Sound
 License:    LGPLv2.1
@@ -65,4 +65,3 @@ if [ -d %{buildroot} ]; then rm -rf %{buildroot}; fi
 %{_libdir}/remix/libremix_noise*
 %{_includedir}/ctxdata.h
 %{_includedir}/remix/*.h
-
