@@ -134,7 +134,8 @@ remix_init (void)
 
   world->refcount = 0;
   world->plugins = cd_list_new (ctx);
-  world->bases = cd_list_new (ctx);
+  //No need to record bases, as individual destroy will take care. Commenting to Fix Memory leak.
+  //world->bases = cd_list_new (ctx);
   world->purging = FALSE;
 
   ctx->mixlength = REMIX_DEFAULT_MIXLENGTH;
@@ -273,8 +274,9 @@ _remix_unregister_plugin (RemixEnv * env, RemixPlugin * plugin)
 RemixEnv *
 _remix_register_base (RemixEnv * env, RemixBase * base)
 {
-  RemixWorld * world = env->world;
-  world->bases = cd_list_append (env, world->bases, CD_POINTER(base));
+  //As world->bases is not initialized and used, so should not add it to env
+  //RemixWorld * world = env->world;
+  //world->bases = cd_list_append (env, world->bases, CD_POINTER(base));
   return env;
 }
 
@@ -284,8 +286,9 @@ _remix_unregister_base (RemixEnv * env, RemixBase * base)
   RemixWorld * world = env->world;
   if (world->purging) return env;
 
-  world->bases = cd_list_remove (env, world->bases, CD_TYPE_POINTER,
-				 CD_POINTER(base));
+  //As world->bases is not initialized and used, so should not remove it from env
+  //world->bases = cd_list_remove (env, world->bases, CD_TYPE_POINTER,
+  //				 CD_POINTER(base));
   return env;
 }
 

@@ -2,7 +2,7 @@
 
 Name:       libremix
 Summary:    An audio sequencing and mixing library.
-Version:    0.2.4+slp2+build02
+Version:    0.2.4+build14
 Release:    1
 Group:      Libraries/Sound
 License:    LGPLv2.1
@@ -34,6 +34,8 @@ make %{?jobs:-j%jobs}
 %install
 if [ -d %{buildroot} ]; then rm -rf %{buildroot}; fi
 make install DESTDIR=%{buildroot}
+mkdir -p %{buildroot}/usr/share/license
+cp %{_builddir}/%{buildsubdir}/COPYING %{buildroot}/usr/share/license/%{name}
 
 %clean
 if [ -d %{buildroot} ]; then rm -rf %{buildroot}; fi
@@ -46,6 +48,9 @@ if [ -d %{buildroot} ]; then rm -rf %{buildroot}; fi
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING ChangeLog INSTALL NEWS README TODO doc
 %{_libdir}/libremix.so.*
+%{_libdir}/libctxdata.so*
+%manifest %{name}.manifest
+/usr/share/license/%{name}
 
 %files devel
 %defattr(-,root,root,-)

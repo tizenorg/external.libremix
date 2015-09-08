@@ -149,7 +149,7 @@ remix_monitor_init (RemixEnv * env, RemixBase * base)
 
   monitor->dev_dsp_fd = open (FILENAME, O_WRONLY, 0);
   if (monitor->dev_dsp_fd == -1) {
-    printf ("Couldn't open any output device.\n");
+    //printf ("Couldn't open any output device.\n");
     remix_set_error (env, REMIX_ERROR_SYSTEM);
     return RemixNone;
   }
@@ -374,6 +374,7 @@ static struct _RemixMethods _remix_monitor_methods = {
   remix_monitor_length,
   remix_monitor_seek,
   remix_monitor_flush,
+  NULL, /* reset */
 };
 
 static RemixMonitor *

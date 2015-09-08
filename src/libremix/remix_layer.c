@@ -114,9 +114,12 @@ static int
 remix_layer_destroy (RemixEnv * env, RemixBase * base)
 {
   RemixLayer * layer = (RemixLayer *)base;
+
   if (layer->track)
     _remix_track_remove_layer (env, layer->track, layer);
-  remix_destroy_list (env, layer->sounds);
+  //Just call destructor but dont delete item which is removed already.
+  //remix_destroy_list (env, layer->sounds);
+  cd_list_call_destroy(env, layer->sounds, (CDDestroyFunc)remix_destroy);
   remix_free (layer);
   return 0;
 }
@@ -642,6 +645,7 @@ static struct _RemixMethods _remix_layer_methods = {
   remix_layer_length,  /* length */
   remix_layer_seek,    /* seek */
   remix_layer_flush,   /* flush */
+  NULL,             /* reset */
 };
 
 static RemixLayer *

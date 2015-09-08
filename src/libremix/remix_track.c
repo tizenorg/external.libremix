@@ -94,7 +94,14 @@ static int
 remix_track_destroy (RemixEnv * env, RemixBase * base)
 {
   RemixTrack * track = (RemixTrack *)base;
-  remix_destroy_list (env, track->layers);
+  //Just call destructor but dont delete item which is removed already.
+  //remix_destroy_list (env, track->layers);
+  cd_list_call_destroy(env, track->layers, (CDDestroyFunc)remix_destroy);
+
+  if (track->_mixstream_a != RemixNone)
+    remix_destroy (env, (RemixBase *)track->_mixstream_a);
+  if (track->_mixstream_b != RemixNone)
+    remix_destroy (env, (RemixBase *)track->_mixstream_b);
   remix_free (track);
   return 0;
 }
@@ -423,6 +430,7 @@ static struct _RemixMethods _remix_track_empty_methods = {
   remix_null_length,   /* length */
   remix_null_seek,     /* seek */
   NULL,             /* flush */
+  NULL,            /* reset */
 };
 
 static struct _RemixMethods _remix_track_methods = {
@@ -434,6 +442,7 @@ static struct _RemixMethods _remix_track_methods = {
   remix_track_length,  /* length */
   remix_track_seek,    /* seek */
   remix_track_flush,            /* flush */
+  NULL,            /* reset */
 };
 
 static struct _RemixMethods _remix_track_onelayer_methods = {
@@ -445,6 +454,7 @@ static struct _RemixMethods _remix_track_onelayer_methods = {
   remix_track_length,           /* length */
   remix_track_seek,             /* seek */
   remix_track_flush,            /* flush */
+  NULL,            /* reset */
 };
 
 static struct _RemixMethods _remix_track_twolayer_methods = {
@@ -456,6 +466,7 @@ static struct _RemixMethods _remix_track_twolayer_methods = {
   remix_track_length,           /* length */
   remix_track_seek,             /* seek */
   remix_track_flush,            /* flush */
+  NULL,            /* reset */
 };
 
 static RemixTrack *

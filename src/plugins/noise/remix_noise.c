@@ -102,6 +102,7 @@ static struct _RemixMethods _remix_noise_methods = {
   remix_noise_length,
   NULL, /* seek */
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static RemixBase *

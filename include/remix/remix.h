@@ -215,6 +215,7 @@ RemixCount remix_length (RemixEnv * env, RemixBase * base);
 RemixCount remix_seek (RemixEnv * env, RemixBase * base, RemixCount offset, int whence);
 RemixCount remix_tell (RemixEnv * env, RemixBase * base);
 int remix_flush (RemixEnv * env, RemixBase * base);
+int remix_reset (RemixEnv * env, RemixBase * base);
 
 RemixCount remix_set_mixlength (RemixEnv * env, RemixCount mixlength);
 RemixCount remix_get_mixlength (RemixEnv * env);

@@ -244,6 +244,7 @@ static struct _RemixMethods _remix_squaretone_methods = {
   remix_squaretone_length,
   remix_squaretone_seek,
   NULL, /* flush */
+  NULL, /* reset */
 };
 
 static RemixSquareTone *

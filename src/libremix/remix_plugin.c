@@ -64,7 +64,7 @@ remix_plugin_init (RemixEnv * env, const char * path)
   CDList * l;
   RemixPluginInitFunc init;
 
-  module = dlopen (path, RTLD_NOW);
+  module = dlopen (path, RTLD_LAZY);
 
   if (!module) {
     remix_dprintf ("[remix_plugin_init] Unable to open %s: %s\n", path,

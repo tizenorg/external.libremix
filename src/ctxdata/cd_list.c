@@ -372,15 +372,19 @@ cd_list_insert (void * ctx, CDList * list, CDScalarType type, CDScalar data,
 CDList *
 cd_list_remove (void * ctx, CDList * list, CDScalarType type, CDScalar data)
 {
-  CDList * l = cd_list_find (ctx, list, type, data);
+  CDList *ret_node, * l = cd_list_find (ctx, list, type, data);
 
   if (l == NULL) return list;
 
   if (l->prev) l->prev->next = l->next;
   if (l->next) l->next->prev = l->prev;
 
-  if (l == list) return list->next;
-  else return list;
+  ret_node = (l != list) ? list : list->next;
+  //free the element here to avoid memory leak, otherwise reference is lost
+  //and a dangling pointer.
+  cd_free (l);
+
+  return ret_node;
 }
 
 CDList *
@@ -437,6 +441,24 @@ cd_list_destroy_with (void * ctx, CDList * list, CDDestroyFunc destroy)
     ln = l->next;
     destroy (ctx, l->data.s_pointer);
     cd_free (l);
+  }
+
+  return NULL;
+}
+
+/*
+ * cd_list_call_destroy (ctx, list, destroy)
+ *
+ * Step through list 'list', calling AxDestroyFunc destroy function on each.
+ */
+CDList *
+cd_list_call_destroy (void * ctx, CDList * list, CDDestroyFunc destroy)
+{
+  CDList * l, * ln;
+
+  for (l = list; l; l = ln) {
+    ln = l->next;
+    destroy (ctx, l->data.s_pointer);
   }
 
   return NULL;
